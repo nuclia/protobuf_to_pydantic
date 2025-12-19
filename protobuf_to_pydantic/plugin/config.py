@@ -135,17 +135,18 @@ class ConfigModel(BaseModel):
         arbitrary_types_allowed = True
 
     @_pydantic_adapter.model_validator(mode="after")
-    def after_init(cls, values: Any) -> Any:
+    def after_init(self) -> Any:
         if _pydantic_adapter.is_v1:
-            # values: Dict[str, Any]
-            values["template_instance"] = values["template"](values["local_dict"], values["comment_prefix"])
-            return values
+            # In v1, this is called as root_validator and receives values dict
+            self["template_instance"] = self["template"](self["local_dict"], self["comment_prefix"])
+            return self
         else:
-            # values: "ConfigModel"
-            values.template_instance = values.template(values.local_dict, values.comment_prefix)
-        return values
+            # In v2, self is the ConfigModel instance
+            self.template_instance = self.template(self.local_dict, self.comment_prefix)
+        return self
 
     @_pydantic_adapter.model_validator(mode="before")
+    @classmethod
     def before_init(cls, values: Any) -> Any:
         def _validator(_values: Any) -> dict:
             if not isinstance(_values, SubConfigModel):
