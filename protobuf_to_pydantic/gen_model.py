@@ -608,7 +608,7 @@ class M2P(object):
                 field_dataclass.field_default = protobuf_field.default_value
 
             # At this time, the field type may be modified by the above logic, so it needs to be handled separately
-            if protobuf_field.label == FieldDescriptor.LABEL_REPEATED:
+            if protobuf_field.is_repeated:
                 self._protobuf_field_lable_is_label_repeated_handler(field_dataclass)
             field_info = self._gen_field_info(field_dataclass, skip_validate_rule)
             if not field_info:

@@ -18,7 +18,7 @@ protoc-gen-protobuf-to-pydantic = "protobuf_to_pydantic.plugin.main:main"
 [tool.poetry.dependencies]
 python = "^3.8"
 pydantic = ">=1.9.2, <3.0.0, !=2.5.0, !=2.9.0"
-protobuf = ">=3.20.3"
+protobuf = ">=3.20.3, <7.0.0"
 
 toml = {version = "^0.10.2", optional = true}
 lark = { version = "^1.1.2", optional = true }
