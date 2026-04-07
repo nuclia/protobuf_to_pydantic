@@ -195,7 +195,7 @@ class BaseP2C(object):
                 self._import_set.add("import typing_extensions")
             return "typing_extensions.Annotated" + args_str
         else:
-            type_name = type_._name
+            type_name = getattr(type_, '_name', None)
             arg_list = list(get_args(type_))
             # py version < 3.10
             # typing.Optional[int] output is: typing.Union[int, None]
@@ -207,9 +207,11 @@ class BaseP2C(object):
                 sub_type_str = self._get_value_code(arg_list)
             if not type_name:
                 # Support like typing_extensions.Literal[True]
+                # In Python 3.14+ some types (e.g. Union) lost _name; fall back to __qualname__
+                origin_name = getattr(origin_type, '_name', None) or origin_type.__qualname__
                 if auto_import_type_code:
                     self._import_set.add(f"import {origin_type.__module__}")
-                return f"{origin_type.__module__}.{origin_type._name}{sub_type_str}"
+                return f"{origin_type.__module__}.{origin_name}{sub_type_str}"
             else:
                 # Support other typing
                 if auto_import_type_code:

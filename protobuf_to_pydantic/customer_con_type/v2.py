@@ -72,7 +72,7 @@ def conlist(
     if max_length is not None:
         type_param.append(MaxLen(max_length))
     if len(type_param) > 1:
-        return Annotated.__class_getitem__(tuple(type_param))
+        return Annotated[tuple(type_param)]
 
     return List[item_type]
 
@@ -113,7 +113,7 @@ def conint(
     if multiple_of is not None:
         type_param.append(MultipleOf(multiple_of))
     if len(type_param) > 1:
-        return Annotated.__class_getitem__(tuple(type_param))
+        return Annotated[tuple(type_param)]
     return int
 
 
@@ -157,7 +157,7 @@ def confloat(
     if allow_inf_nan is not None:
         type_param.append(AllowInfNan(allow_inf_nan))
     if len(type_param) > 1:
-        return Annotated.__class_getitem__(tuple(type_param))
+        return Annotated[tuple(type_param)]
     return float
 
 
@@ -185,7 +185,7 @@ def conbytes(
     if max_length is not None:
         type_param.append(MaxLen(max_length))
     if len(type_param) > 1:
-        return Annotated.__class_getitem__(tuple(type_param))
+        return Annotated[tuple(type_param)]
     return bytes
 
 
@@ -230,7 +230,7 @@ def constr(
             )
         )
     if len(type_param) > 1:
-        return Annotated.__class_getitem__(tuple(type_param))
+        return Annotated[tuple(type_param)]
     return str
 
 
@@ -301,7 +301,7 @@ def contimedelta(
     if duration_not_in:
         type_param.append(not_in(duration_not_in))
     if len(type_param) > 1:
-        return Annotated.__class_getitem__(tuple(type_param))  # type: ignore[return-value]
+        return Annotated[tuple(type_param)]  # type: ignore[return-value]
     return timedelta
 
 
@@ -433,7 +433,7 @@ def contimestamp(
     if timestamp_within:
         type_param.append(within(timestamp_within))
     if len(type_param) > 1:
-        return Annotated.__class_getitem__(tuple(type_param))  # type: ignore[return-value]
+        return Annotated[tuple(type_param)]  # type: ignore[return-value]
     return datetime
 
 
